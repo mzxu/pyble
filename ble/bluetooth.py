@@ -143,6 +143,10 @@ class linkTerminatedReason:
 class resetType:
     HARD_RESET  = "\x00"
     SOFT_RESET  = "\x01"
+
+class AdType:
+    ADVERTISEMENT_DATA = "\x00"
+    SCAN_RSP_DATA = "\x01"
     
 rxServerMTU = "\x23\x00" #it's mtu value predefined by cc2540 chip, should be able to change but currently we'd better not do that.
 
@@ -187,10 +191,10 @@ class ble:
             #init device as peripheral mode
             print(utils.printOutput(self.ble_builder.send("fe00", profile_role = "\x04")))  
     
-    def DoUpdateAdvertisingData(self, data):
+    def DoUpdateAdvertisingData(self, data, ad_type = AdType.ADVERTISEMENT_DATA):
         print("COMMAND: Set advertising data as %s " % data)
         data_length = utils.getByteDataLengh(data)
-        print(utils.printOutput(self.ble_builder.send("fe07", advert_data = data, data_length = data_length)))        
+        print(utils.printOutput(self.ble_builder.send("fe07", advert_data = data, data_length = data_length, ad_type= ad_type)))        
 
     def DoMakeDiscoverable(self, event_type = eventType.NON_CONN_UNDIRECT_AD, init_addr_type = initiatorAddrType.PrivateResolve, filter_policy = filterPolicy.All):
         print("COMMAND: GAP_MakeDeviceDiscoverable")
@@ -412,4 +416,3 @@ class ble:
                 
 
         
-
