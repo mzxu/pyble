@@ -144,7 +144,7 @@ class resetType:
     HARD_RESET  = "\x00"
     SOFT_RESET  = "\x01"
 
-class AdType:
+class adType:
     ADVERTISEMENT_DATA = "\x00"
     SCAN_RSP_DATA = "\x01"
     
@@ -191,7 +191,7 @@ class ble:
             #init device as peripheral mode
             print(utils.printOutput(self.ble_builder.send("fe00", profile_role = "\x04")))  
     
-    def DoUpdateAdvertisingData(self, data, ad_type = AdType.ADVERTISEMENT_DATA):
+    def DoUpdateAdvertisingData(self, data, ad_type = adType.ADVERTISEMENT_DATA):
         print("COMMAND: Set advertising data as %s " % data)
         data_length = utils.getByteDataLengh(data)
         print(utils.printOutput(self.ble_builder.send("fe07", advert_data = data, data_length = data_length, ad_type= ad_type)))        
@@ -311,8 +311,9 @@ class ble:
                 RSSI = int(dictionary['rssi'][1], 16)
                 Addr = dictionary['addr']
                 AddrType = dictionary['addr_type']
+                EventType = dictionary['event_type']
                 func = getattr(self, "DidDiscoverSuccess") 
-                func(Addr, RSSI, Data, AddrType)
+                func(Addr, RSSI, Data, AddrType, EventType)
         if event == hci_event.GAP_LinkEstablished:
             if hasattr(self, "DidConnectSuccess"):
                 Addr = dictionary['dev_addr']
