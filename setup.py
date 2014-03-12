@@ -1,15 +1,15 @@
-from distutils.core import setup
-
+from setuptools import setup
 setup(
     name='pyble',
-    version='0.01',
+    version='0.02',
     author='Mingze',
     author_email='mzxu@outlook.com',
     packages=['ble','samples'],
-    scripts=['README.md'],
+    include_package_data=True,
+    zip_safe=False,
     license="MIT",
     url='https://github.com/mzxu/pyble',
     install_requires=["pyserial"],
     description='Bluetooth Low Energy Python module based on TI cc2540',
-    long_description=open('README.md').read()
+    long_description="Bluetooth Low Energy Python module based on TI cc2540.",
     )
